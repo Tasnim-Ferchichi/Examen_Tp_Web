@@ -1,0 +1,33 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Liste des etudiants{% endblock %}
+
+{% block body %}
+    <table class="table">
+        <tr  class="table-primary">
+        <th>Nom</th>
+        <th>Prenom</th>
+        <th>Section</th>
+        <th>Action</th>
+        </tr>
+        {% for etudiant in etudiants %}
+            {%if loop.index % 2 ==1 %}
+                <tr  class="table-warning" onclick="change(this,'table-warning')" >
+            {%else%}
+                <tr  class="table-success" onclick="change(this,'table-success')">
+            {%endif%}
+
+            <td >{{etudiant.nom}}</td>
+            <td >{{etudiant.prenom}}</td>
+            <td >{%if etudiant.appartenir == null %} Cet etudiant non encore affecté à une  section
+                {%else%} {{etudiant.appartenir}}
+                {%endif%}
+            </td>
+            <td><a href="{{ path('app_etudiant_delete', {id: etudiant.id}) }}">Delete</a>
+                <a href="{{ path('app_etudiant_edit', {id: etudiant.id}) }}">Edit</a>
+            </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}
